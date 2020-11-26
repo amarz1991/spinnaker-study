@@ -2,26 +2,26 @@ kind: Deployment
 apiVersion: apps/v1
 metadata:
     labels:
-        app: cognitive-law-microservice
+        app: cognitivelaw-microservice
         stack: frontend
         source: demo
-    name: cognitive-law-microservice
+    name: cognitivelaw-microservice
     namespace: microservices
 spec:
     replicas: 3
     selector:
         matchLabels:
-            run: cognitive-law-microservice
+            run: cognitivelaw-microservice
     template:
         metadata:
             labels:
-                app: cognitive-law-microservice
-                run: cognitive-law-microservice
+                app: cognitivelaw-microservice
+                run: cognitivelaw-microservice
                 source: demo
         spec:
             containers:
-                -   image: 702037529261.dkr.ecr.us-west-2.amazonaws.com/cognitive-law-microservice
-                    name: cognitive-law-microservice
+                -   image: 702037529261.dkr.ecr.us-west-2.amazonaws.com/cognitivelaw-microservice
+                    name: cognitivelaw-microservice
                     ports:
                         -   name: web
                             containerPort: 8080
@@ -31,13 +31,13 @@ kind: Service
 apiVersion: v1
 metadata:
     labels:
-        app: cognitive-law-microservice-service
-    name: cognitive-law-microservice-service
+        app: cognitivelaw-microservice-service
+    name: cognitivelaw-microservice-service
     namespace: microservices
 spec:
     selector:
         source: demo
-        app: cognitive-law-microservice
+        app: cognitivelaw-microservice
     ports:
         -   name: web
             protocol: TCP
@@ -51,13 +51,13 @@ kind: Ingress
 metadata:
     annotations:
         nginx.ingress.kubernetes.io/rewrite-target: /$2
-    name: cognitive-law-ingress
+    name: cognitivelaw-ingress
     namespace: microservices
 spec:
     rules:
         -   http:
                 paths:
-                    -   path: /cognitive-law(/|$)(.*)
+                    -   path: /cognitivelaw(/|$)(.*)
                         backend:
-                            serviceName: cognitive-law-microservice-service
+                            serviceName: cognitivelaw-microservice-service
                             servicePort: 30201
